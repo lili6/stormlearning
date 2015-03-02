@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
+ * 将接收到的单词写入到一个文件当中
  * Created by lili on 2015/3/2.
  */
 public class WriterBolt extends BaseBasicBolt{
@@ -25,7 +26,7 @@ public class WriterBolt extends BaseBasicBolt{
 	public void prepare(Map stormConf, TopologyContext context) {
 		log.warn("################# WriterBolt prepare() method invoked");
 		try {
-			writer = new FileWriter("/home/" + this);
+			writer = new FileWriter("/home/lili/tmp" + this);
 		} catch (IOException e) {
 			log.error("prepare exception:",e);
 			throw new RuntimeException(e);

@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  *
  * Created by lili on 2015/3/2.
+ * 将数据做简单的传递Bolt
  */
 public class TransferBolt extends BaseBasicBolt{
 	private static final Logger log = LoggerFactory.getLogger(TransferBolt.class);

@@ -3,7 +3,7 @@
 *.swp
 *.bak
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.ear
 *.iml
