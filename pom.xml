@@ -11,6 +11,7 @@
       <module>user</module> -->
 
       <module>starter</module>
+      <module>Kafka0.8Storm0.9.1Optr</module>
     </modules>
     <packaging>pom</packaging>
 
