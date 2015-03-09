@@ -1,0 +1,17 @@
+Before running this, make sure you have created the Topic page_visits. From the command line:
+bin/kafka-create-topic.sh --topic page_visits --replica 3 --zookeeper localhost:2181 --partition 5
+Make sure you include a --partition option so you create more than one.
+Now compile and run your Producer and data will be written to Kafka.
+To confirm you have data, use the command line tool to see what was written:
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic page_visits --from-beginning
+
+
+For example you want to:
+Read a message multiple times
+Consume only a subset of the partitions in a topic in a process
+Manage transactions to make sure a message is processed once and only once
+Downsides of using SimpleConsumer
+The SimpleConsumer does require a significant amount of work not needed in the Consumer Groups:
+You must keep track of the offsets in your application to know where you left off consuming.
+You must figure out which Broker is the lead Broker for a topic and partition
+You must handle Broker leader changes
