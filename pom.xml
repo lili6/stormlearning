@@ -14,6 +14,8 @@
       <module>Kafka0.8Storm0.9.1Optr</module>
       <module>storm-samples</module>
       <module>kafkastorm0.9.2</module>
+      <module>curator-configurator</module>
+      <module>curator-config</module>
     </modules>
     <packaging>pom</packaging>
 

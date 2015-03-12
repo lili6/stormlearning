@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context">
+<context:component-scan base-package="com.lili">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+</context:component-scan>
+        <!-- Curator的FactoryBean，Spring启动时创建Curator实例。 -->
+<bean id="zookeeperFactoryBean" class="com.lili.zk.core.ZookeeperFactoryBean" lazy-init="false">
+<property name="zkConnectionString" value="hadoopmaster:2181"/>
+<!-- 设置zookeeper的事件监听者，本例是一个logback日志级别znode监听器 -->
+<property name="listeners">
+    <list>
+        <bean class="com.lili.zk.configuration.LogbackLevelListener">
+            <constructor-arg value="/zk_test/logbacklevel"/>
+        </bean>
+        <!--分布式队列应用-->
+        <bean class="com.lili.zk.queues.DistributedQueueDemo"></bean>
+    </list>
+
+</property>
+
+
+</bean>
+</beans>
+
