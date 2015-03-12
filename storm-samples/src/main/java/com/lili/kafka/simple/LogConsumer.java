@@ -87,7 +87,7 @@ public class LogConsumer {
 				MessageAndMetadata<byte[],byte[]> item = it.next();
 				System.out.println("partiton:" + item.partition());
 				System.out.println("offset:" + item.offset());
-				executor.execute(new String(item.message()));//UTF-8
+				executor.execute("收到的消息:"+new String(item.message()));//UTF-8
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.lili.bolt;
+package com.lili.storm.bolt;
 
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -8,6 +8,7 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 /**
+ * 接收到数据在后面添加！Exclaim，然后继续发送出去
  * Created by lili on 15/3/8.
  */
 public class ExclaimBasicBolt extends BaseBasicBolt {

@@ -16,6 +16,7 @@
       <module>kafkastorm0.9.2</module>
       <module>curator-configurator</module>
       <module>curator-config</module>
+      <module>wordcount</module>
     </modules>
     <packaging>pom</packaging>
 

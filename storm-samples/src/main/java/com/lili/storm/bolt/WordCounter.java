@@ -1,4 +1,4 @@
-package com.lili.bolt;
+package com.lili.storm.bolt;
 
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;

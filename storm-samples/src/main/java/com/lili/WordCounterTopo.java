@@ -4,9 +4,9 @@ import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
-import com.lili.bolt.WordCounter;
-import com.lili.bolt.WordNormalizer;
-import com.lili.spout.WordReader;
+import com.lili.storm.bolt.WordCounter;
+import com.lili.storm.bolt.WordNormalizer;
+import com.lili.storm.spout.WordReader;
 
 /**
  * 功能说明：

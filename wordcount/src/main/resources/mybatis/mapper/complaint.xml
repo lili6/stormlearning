@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cyou.gm.support.dao.auto.ComplaintDao">
+
+    <sql id="TABLE">
+        s_complaint
+    </sql>
+    <sql id="REPORT">
+        s_dayreport
+    </sql>
+
+    <insert id="insertComplaint"  useGeneratedKeys="true"  keyProperty="complaint.aid" parameterType="Complaint">
+        insert into
+        <include refid="TABLE" />
+        (gameId,areaId,playerName,playerId,destId,destName,content,contentType,createTime,
+        creator,updateTime)
+        values(#{complaint.gameId},#{complaint.areaId},#{complaint.playerName},#{complaint.playerId},
+        #{complaint.destId},#{complaint.destName},#{complaint.content},#{complaint.contentType},now(),#{complaint.playerName},now())
+    </insert>
+
+    <!-- 更新处理状态 -->
+    <update id="updateComplaint" parameterType="Complaint">
+        update
+        <include refid="TABLE" />
+        set
+        <if test="complaint.enabled!=null">
+            enabled=#{complaint.enabled.code},
+        </if>
+        <if test="complaint.status!=null">
+        status = #{complaint.status.code},
+        </if>
+        <if test="complaint.author!=null">
+        author =#{complaint.author},
+        </if>
+        updateTime = now()
+        where
+        aid = #{complaint.aid}
+    </update>
+
+   <!-- 查询投诉列表 -->
+    <select id="queryComplaint" parameterType="Complaint" resultType="Complaint">
+        SELECT aid,gameId,areaId,playerName,playerId,destName,destId,content,contentType,status,
+        createTime,creator,updateTime,author FROM  <include refid="TABLE" />
+        WHERE
+        1=1
+        <if test="complaint.playerId!=null">
+           AND playerId=#{complaint.playerId}
+        </if>
+        <if test="complaint.playerName!=null">
+            AND playerName LIKE '%${complaint.playerName}%'
+        </if>
+        <if test="complaint.destId!=null">
+            AND  destId=#{complaint.destId}
+        </if>
+        <if test="complaint.destName!=null">
+            AND  destName LIKE '%${complaint.destName}%'
+        </if>
+        <if test="complaint.status!=null">
+            AND  status=#{complaint.status.code}
+        </if>
+        <if test="complaint.content!=null">
+            AND  content LIKE '%${complaint.content}%'
+        </if>
+        <if test="complaint.contentType!=null">
+            AND  contentType=#{complaint.contentType}
+        </if>
+        <if test="complaint.fromDate !=null and complaint.fromDate !=''">
+            <![CDATA[
+            and DATE_FORMAT(createTime, '%Y-%m-%d') >=  DATE_FORMAT(#{complaint.fromDate}, '%Y-%m-%d')
+            ]]>
+        </if>
+        <if test="complaint.toDate !=null and complaint.toDate !=''">
+            <![CDATA[
+            and DATE_FORMAT(createTime, '%Y-%m-%d') <=  DATE_FORMAT(#{complaint.toDate}, '%Y-%m-%d')
+            ]]>
+        </if>
+        <if test="complaint.areaIds !=null and complaint.areaIds !=''">
+            AND  areaId in ${complaint.areaIds}
+        </if>
+        <if test="complaint.sort==0">     <!--降序-->
+            and   ${complaint.startIndex} >= aid
+           order BY aid  DESC   limit 0,${complaint.pageSize}
+        </if>
+        <if test="complaint.sort==1">     <!--升序-->
+            and   aid >= ${complaint.startIndex}
+            order BY aid ASC   limit 0,${complaint.pageSize}
+        </if>
+    </select>
+
+    <!-- 查询投诉列表根据aid -->
+    <select id="queryComplaintByAid" parameterType="Complaint" resultType="Complaint">
+        SELECT aid,gameId,areaId,playerName,playerId,destName,destId,content,contentType,status,
+        createTime,creator,updateTime,author FROM  <include refid="TABLE" />
+        WHERE
+        aid = #{complaint.aid}
+    </select>
+
+    <select id="queryComplaintBySQL" parameterType="String" resultType="Complaint">
+        ${sqlstr}
+    </select>
+
+
+    <!-- 查询投诉统计信息 -->
+    <select id="queryReport" parameterType="DayReport" resultType="DayReport">
+    SELECT areaId,reportDate,complaintCount,playerCount,destCount,
+    createTime FROM  <include refid="REPORT" />
+    WHERE
+    1=1
+        <if test="dayReport.areaIds !=null and dayReport.areaIds !=''">
+            AND  areaId in ${dayReport.areaIds}
+        </if>
+        <if test="dayReport.fromDate !=null and dayReport.fromDate !=''">
+            <![CDATA[
+            and DATE_FORMAT(reportDate, '%Y-%m-%d') >=  DATE_FORMAT(#{dayReport.fromDate}, '%Y-%m-%d')
+            ]]>
+        </if>
+        <if test="dayReport.toDate !=null and dayReport.toDate !=''">
+            <![CDATA[
+            and DATE_FORMAT(reportDate, '%Y-%m-%d') <=  DATE_FORMAT(#{dayReport.toDate}, '%Y-%m-%d')
+            ]]>
+        </if>
+    </select>
+
+</mapper>
+

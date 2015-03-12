@@ -5,11 +5,12 @@ import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.utils.Utils;
-import com.lili.bolt.ExclaimBasicBolt;
-import com.lili.bolt.PrintBolt;
-import com.lili.spout.RandomSpout;
+import com.lili.storm.bolt.ExclaimBasicBolt;
+import com.lili.storm.bolt.PrintBolt;
+import com.lili.storm.spout.RandomSpout;
 
 /**
+ * 最简单的topology测试
  * Created by lili on 15/3/8.
  */
 public class ExclaimBasicTopo {
@@ -28,7 +29,6 @@ public class ExclaimBasicTopo {
 
         if (args != null && args.length > 0) {//提交到集群上运行
             conf.setNumWorkers(3);
-
             StormSubmitter.submitTopology(args[0], conf, builder.createTopology());
         } else { //本地集群模式运行
 

@@ -1,4 +1,4 @@
-package com.lili.spout;
+package com.lili.storm.spout;
 
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -13,6 +13,7 @@ import java.util.Random;
 /**
  *
  * Created by lili on 15/3/8.
+ * 随机发送sentences里面的数据
  */
 public class RandomSpout extends BaseRichSpout{
     private SpoutOutputCollector collector;
@@ -26,12 +27,16 @@ public class RandomSpout extends BaseRichSpout{
                      SpoutOutputCollector collector) {
         this.collector = collector;
         this.rand = new Random();
+
     }
+
 
     @Override
     public void nextTuple() {
+        //持续不断的发送随机语句
         String toSay = sentences[rand.nextInt(sentences.length)];
         this.collector.emit(new Values(toSay));
+
     }
 
     /**
