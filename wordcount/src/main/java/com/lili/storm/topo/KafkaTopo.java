@@ -15,6 +15,7 @@ import storm.kafka.*;
  * Created by lili on 2015/3/12.
  * 利用kafka发送过来的数据进行处理
  * 将Sentence-spout 换为KafkaSpout
+ * can be run
  */
 public class KafkaTopo {
 
@@ -33,7 +34,7 @@ public class KafkaTopo {
 		String zkRoot = "/brokers/topics";
 		String spoutId = "myKafka";
 		//worker和spout数
-		int workNumber = 1;
+		int workNumber = 2;
 		//bolt线程数
 		int boltNumber =  1;
 
@@ -66,8 +67,8 @@ public class KafkaTopo {
 		config.setDebug(true);
 
 		if (args != null && args.length > 0) {//提交到集群上运行
-			config.setNumWorkers(workNumber);
-			config.setNumWorkers(3);
+//			config.setNumWorkers(workNumber);
+			config.setNumWorkers(1);
 			StormSubmitter.submitTopology(args[0], config, builder.createTopology());
 		} else { //本地集群模式运行
 			LocalCluster cluster = new LocalCluster();
