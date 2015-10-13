@@ -38,6 +38,7 @@ public class RandomWordSpout extends BaseRichSpout{
 	@Override
 	public void nextTuple() {
 		log.warn("===============nextTuple is executing....");
+		System.out.println("===============nextTuple is executing....");
 		Utils.sleep(500);
 		String str = words[random.nextInt(words.length)];
 		collector.emit(new Values(str));

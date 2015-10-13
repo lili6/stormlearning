@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	 <!-- info和error日志 每天一个日志  -->  
+	 <appender name="default_appender_daily" class="org.apache.log4j.DailyRollingFileAppender">
+	 <!--<appender name="default_appender_daily" class="org.apache.log4j.RollingFileAppender">-->
+		<param name="file" value="${log.path}/stormProcess.log"/>
+		<param name="DatePattern" value=".yyyy-MM-dd" />
+		 <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->  
+        <param name="Append" value="true" />
+		<param name="encoding" value="utf-8"/>
+		<!--<param name="threshold" value="INFO"/>-->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-5p] [%d] %m -- ([%M],%F,%L)%n"/>
+		</layout>
+	</appender>
+	<appender name="myFile" class="org.apache.log4j.RollingFileAppender">
+		<!--<param name="file" value="${log.path}/stormProcess2.log"/>-->
+		<param name="file" value="./logs/stormProcess2.log"/>
+		<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="Append" value="true" />
+		<param name="MaxBackupIndex" value="10" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+
+			<!--<param name="ConversionPattern" value="%p (%c:%L)- %m%n" />-->
+			<param name="ConversionPattern" value="[%-5p] [%d] %m -- ([%M],%F,%L)%n"/>
+		</layout>
+	</appender>
+
+	<!-- error日志 每天一个日志  -->  
+  	<appender name="error_appender_daily" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${log.path}/stormProcess-error.log"/>
+		<param name="DatePattern" value=".yyyy-MM-dd" />
+		 <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->  
+        <param name="Append" value="true" />  
+		<param name="encoding" value="utf-8"/>
+		<param name="threshold" value="ERROR"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-5p] [%d] %m -- ([%M],%F,%L)%n"/>
+		</layout>
+	</appender>
+	
+	<!-- 输出到控制台中-->
+    <appender name="console_appender" class="org.apache.log4j.ConsoleAppender">  
+   		<param name="encoding" value="utf-8"/>
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="[%-5p] [%d] %m - ([%M],%F,%L)%n" />
+        </layout>  
+    </appender>
+
+	<!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制-->
+	<root>
+ 		<!-- root 整体设置过滤优先级，如果appender 没有设置filter或Threshold 默认采用该级别，定义的logger不在其中（即不会被过滤掉）。 -->  
+	    <!--<priority value="DEBUG"/>-->
+		<appender-ref ref="myFile"/>
+		<appender-ref ref="default_appender_daily"/>
+		<appender-ref ref="error_appender_daily"/>
+		 <appender-ref ref="console_appender"/>
+	</root>
+	
+</log4j:configuration>
